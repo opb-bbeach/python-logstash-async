@@ -38,12 +38,17 @@ class AsynchronousLogstashHandler(Handler):
     _worker_thread = None
 
     # ----------------------------------------------------------------------
-    def __init__(self, host, port, database_path, transport='logstash_async.transport.TcpTransport',
+    def __init__(self, host=None, port=None, database_path=None, transport='logstash_async.transport.TcpTransport',
                  ssl_enable=False, ssl_verify=True, keyfile=None, certfile=None, ca_certs=None,
                  enable=True, event_ttl=None, encoding='utf-8'):
         super(AsynchronousLogstashHandler, self).__init__()
+        if not host:
+            raise ValueError("host required.")
         self._host = host
+        if not port:
+            raise ValueError("port required.")
         self._port = port
+        
         self._database_path = database_path
         self._transport_path = transport
         self._ssl_enable = ssl_enable
